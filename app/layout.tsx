@@ -1,20 +1,20 @@
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
-import Navbar from "@/components/header/Navbar";
-import Footer from "@/components/footer/Footer";
+import { cn } from "@/lib/utils"
+import Navbar from "@/components/header/Navbar"
+import Footer from "@/components/footer/Footer"
 
 const inter = Inter({
-    variable: "--font-inter",
-    subsets: ["latin"],
-});
+  variable: "--font-inter",
+  subsets: ["latin"],
+})
 
 const spaceGrotesk = Space_Grotesk({
-    variable: "--font-space-grotesk",
-    subsets: ["latin"],
-});
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+})
 
 export default function RootLayout({
   children,
@@ -28,8 +28,10 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
     >
       <body>
-        <Navbar />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Navbar />
+          {children}
+        </ThemeProvider>
         <Footer />
       </body>
     </html>

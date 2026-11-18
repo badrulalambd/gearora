@@ -30,9 +30,9 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <Navbar />
-          {children}
+          <main>{children}</main>
+          <Footer />
         </ThemeProvider>
-        <Footer />
       </body>
     </html>
   )

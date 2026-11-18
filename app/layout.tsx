@@ -1,10 +1,11 @@
 import { Inter, Space_Grotesk } from "next/font/google"
+import { Toaster } from "react-hot-toast"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils"
 import Navbar from "@/components/header/Navbar"
 import Footer from "@/components/footer/Footer"
+
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,6 +33,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <Toaster position="top-center" />
         </ThemeProvider>
       </body>
     </html>

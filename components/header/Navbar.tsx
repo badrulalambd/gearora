@@ -3,12 +3,14 @@
 import { useEffect, useState, useSyncExternalStore } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import { LogIn, Menu, Moon, Sun, UserPlus, X } from "lucide-react"
+import { LayoutDashboard, LogIn, LogOut, Menu, Moon, Sun, UserPlus, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { authClient, useSession } from "@/lib/auth-client"
+import toast from "react-hot-toast"
 
 const menuItems = [
   { label: "Home", href: "/" },
@@ -18,12 +20,17 @@ const menuItems = [
   { label: "Contact Us", href: "/contact-us" },
 ]
 
-const emptySubscribe = () => () => {}
+const emptySubscribe = () => () => { }
 
 const Navbar = () => {
   const pathname = usePathname()
   const { resolvedTheme, setTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
+  const router = useRouter();
+
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+  console.log("User Session: ", user);
 
   // Detect hydration without setState-in-effect: false during SSR,
   // true on the client afterwards (avoids a theme-icon mismatch).
@@ -64,6 +71,17 @@ const Navbar = () => {
       ? pathname === "/"
       : pathname === href || pathname.startsWith(`${href}/`)
 
+  const handleLogout = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("Logout successful!")
+          router.push("/sign-in"); // redirect to login page
+        },
+      },
+    });
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0B0B]/95 backdrop-blur-md">
       <div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
@@ -95,7 +113,7 @@ const Navbar = () => {
               className={cn(
                 "relative text-sm font-medium text-gray-300 transition-colors duration-200 after:absolute after:-bottom-1.5 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-[#F4B400] after:transition-all after:duration-300 hover:text-[#F4B400] hover:after:w-full",
                 isActive(item.href) &&
-                  "font-semibold text-[#F4B400] after:w-full"
+                "font-semibold text-[#F4B400] after:w-full"
               )}
             >
               {item.label}
@@ -121,24 +139,50 @@ const Navbar = () => {
 
           {/* Login / Register - desktop */}
           <div className="hidden items-center gap-2 lg:flex">
-            <Button
-              variant="ghost"
-              render={<Link href="/sign-in" />}
-              nativeButton={false}
-              className="h-10 gap-2 border border-transparent px-4 text-sm font-medium text-gray-300 hover:bg-[#F4B400]/10 hover:text-[#F4B400]"
-            >
-              <LogIn className="h-4 w-4" />
-              Login
-            </Button>
+            {
+              user ?
+                <>
+                  <Button
+                    variant="ghost"
+                    render={<Link href="/dashboard" />}
+                    nativeButton={false}
+                    className="h-10 gap-2 border border-transparent px-4 text-sm font-medium text-gray-300 hover:bg-[#F4B400]/10 hover:text-[#F4B400]"
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    Dashboard
+                  </Button>
 
-            <Button
-              render={<Link href="/sign-up" />}
-              nativeButton={false}
-              className="h-10 gap-2 bg-[#F4B400] px-5 text-sm font-bold text-[#0B0B0B] shadow-lg shadow-[#F4B400]/20 hover:bg-[#E5A600]"
-            >
-              <UserPlus className="h-4 w-4" />
-              Register
-            </Button>
+                  <Button
+                    onClick={handleLogout}
+                    nativeButton={false}
+                    className="h-10 gap-2 bg-[#F4B400] px-5 text-sm font-bold text-[#0B0B0B] shadow-lg shadow-[#F4B400]/20 hover:bg-[#E5A600]"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Logout
+                  </Button>
+                </>
+                :
+                <>
+                  <Button
+                    variant="ghost"
+                    render={<Link href="/sign-in" />}
+                    nativeButton={false}
+                    className="h-10 gap-2 border border-transparent px-4 text-sm font-medium text-gray-300 hover:bg-[#F4B400]/10 hover:text-[#F4B400]"
+                  >
+                    <LogIn className="h-4 w-4" />
+                    Login
+                  </Button>
+
+                  <Button
+                    render={<Link href="/sign-up" />}
+                    nativeButton={false}
+                    className="h-10 gap-2 bg-[#F4B400] px-5 text-sm font-bold text-[#0B0B0B] shadow-lg shadow-[#F4B400]/20 hover:bg-[#E5A600]"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    Register
+                  </Button>
+                </>
+            }
           </div>
 
           {/* Hamburger - mobile & tablet */}
@@ -174,7 +218,7 @@ const Navbar = () => {
                 className={cn(
                   "rounded-lg px-3 py-3 text-sm font-medium text-gray-300 transition-colors duration-200 hover:bg-[#F4B400]/10 hover:text-[#F4B400]",
                   isActive(item.href) &&
-                    "bg-[#F4B400]/10 font-semibold text-[#F4B400]"
+                  "bg-[#F4B400]/10 font-semibold text-[#F4B400]"
                 )}
               >
                 {item.label}

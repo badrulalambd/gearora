@@ -39,7 +39,7 @@ const SignInPage = () => {
       return
     }
 
-    toast.success("Welcome back! You are now logged in.")
+    toast.success("Login successful!")
     router.push("/")
   }
 

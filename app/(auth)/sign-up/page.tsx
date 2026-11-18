@@ -13,9 +13,12 @@ import { GoogleButton } from "@/components/auth/GoogleButton"
 import { Button } from "@/components/ui/button"
 import { signUp } from "@/lib/auth-client"
 
+type Role = "customer" | "owner" | "admin"
+
 const SignUpPage = () => {
   const router = useRouter()
   const [pending, setPending] = useState(false)
+  const [role, setRole] = useState<Role>("customer")
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -49,6 +52,7 @@ const SignUpPage = () => {
       email,
       password,
       ...(photoUrl ? { image: photoUrl } : {}),
+      role,
     })
 
     if (error) {
@@ -58,8 +62,10 @@ const SignUpPage = () => {
     }
 
     toast.success("Account created successfully! Welcome to GearOra.")
-    router.push("/")
+    router.push("/sign-in")
   }
+
+  
 
   return (
     <AuthShell

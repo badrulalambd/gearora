@@ -24,4 +24,15 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  // Add this section to allow custom fields:
+  user: {
+    additionalFields: {
+      role: {
+        type: ["customer", "owner", "admin"],
+        input: true,
+        required: false,
+        defaultValue: "customer",
+      },
+    },
+  },
 })

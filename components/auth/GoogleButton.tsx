@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState } from "react"
@@ -37,18 +38,32 @@ const GoogleButton = ({ callbackURL = "/" }: GoogleButtonProps) => {
   const handleGoogleLogin = async () => {
     setPending(true)
 
-    const { error } = await signIn.social({
-      provider: "google",
-      callbackURL,
-    })
+    try {
+      // Store a success flag before redirecting to Google.
+      sessionStorage.setItem("google-login-success", "true")
 
-    if (error) {
-      toast.error(
-        error.message || "Could not continue with Google. Please try again."
-      )
+      const { error } = await signIn.social({
+        provider: "google",
+        callbackURL,
+      })
+
+      if (error) {
+        // Remove the flag if Google login fails.
+        sessionStorage.removeItem("google-login-success")
+
+        toast.error(
+          error.message || "Could not continue with Google. Please try again."
+        )
+
+        setPending(false)
+      }
+    } catch {
+      sessionStorage.removeItem("google-login-success")
+
+      toast.error("Something went wrong. Please try again.")
+
       setPending(false)
     }
-    // On success the browser is redirected to Google, so no reset needed.
   }
 
   return (

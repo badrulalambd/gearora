@@ -16,6 +16,7 @@ export const auth = betterAuth({
     // Matches the client-side rule shown on the sign-up form (>= 6 chars);
     // BetterAuth's default of 8 would reject valid registrations.
     minPasswordLength: 6,
+    autoSignIn: false,
   },
   baseURL: process.env.BETTER_AUTH_URL,
   socialProviders: {

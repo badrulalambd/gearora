@@ -5,6 +5,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/header/Navbar"
 import Footer from "@/components/footer/Footer"
+import GoogleLoginToast from "@/components/auth/GoogleLoginToast"
 
 
 const inter = Inter({
@@ -34,6 +35,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <Toaster position="bottom-right" />
+          <GoogleLoginToast />
         </ThemeProvider>
       </body>
     </html>

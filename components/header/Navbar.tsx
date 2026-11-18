@@ -5,11 +5,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
-import { LayoutDashboard, LogIn, LogOut, Menu, Moon, Sun, UserPlus, X } from "lucide-react"
+import { LayoutDashboard, LayoutDashboardIcon, LogIn, LogOut, LogOutIcon, Menu, Moon, Sun, UserPlus, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { authClient, useSession } from "@/lib/auth-client"
+import { authClient } from "@/lib/auth-client"
 import toast from "react-hot-toast"
 
 const menuItems = [
@@ -144,7 +144,7 @@ const Navbar = () => {
                 <>
                   <Button
                     variant="ghost"
-                    render={<Link href="/dashboard" />}
+                    render={<Link href={`/dashboard/${user?.role || "customer"}`} />}
                     nativeButton={false}
                     className="h-10 gap-2 border border-transparent px-4 text-sm font-medium text-gray-300 hover:bg-[#F4B400]/10 hover:text-[#F4B400]"
                   >
@@ -228,26 +228,53 @@ const Navbar = () => {
 
           {/* Login / Register - under the menu items */}
           <div className="flex flex-col gap-3 border-t border-white/10 px-4 py-4 sm:px-6">
-            <Button
-              variant="ghost"
-              render={<Link href="/sign-in" />}
-              nativeButton={false}
-              onClick={() => setMenuOpen(false)}
-              className="h-11 w-full gap-2 border border-[#F4B400]/50 bg-transparent text-sm font-semibold text-[#F4B400] hover:bg-[#F4B400]/10 hover:text-[#F4B400]"
-            >
-              <LogIn className="h-4 w-4" />
-              Login
-            </Button>
+            {
+              user ?
+                <>
+                  <Button
+                    variant="ghost"
+                    render={<Link href={`/dashboard/${user?.role || "customer"}`} />}
+                    nativeButton={false}
+                    onClick={() => setMenuOpen(false)}
+                    className="h-11 w-full gap-2 border border-[#F4B400]/50 bg-transparent text-sm font-semibold text-[#F4B400] hover:bg-[#F4B400]/10 hover:text-[#F4B400]"
+                  >
+                    <LayoutDashboardIcon className="h-4 w-4" />
+                    Dashboard
+                  </Button>
 
-            <Button
-              render={<Link href="/sign-up" />}
-              nativeButton={false}
-              onClick={() => setMenuOpen(false)}
-              className="h-11 w-full gap-2 bg-[#F4B400] text-sm font-bold text-[#0B0B0B] shadow-lg shadow-[#F4B400]/20 hover:bg-[#E5A600]"
-            >
-              <UserPlus className="h-4 w-4" />
-              Register
-            </Button>
+                  <Button
+                    nativeButton={false}
+                    onClick={() => {setMenuOpen(false); ; handleLogout()}}
+                    className="h-11 w-full gap-2 bg-[#F4B400] text-sm font-bold text-[#0B0B0B] shadow-lg shadow-[#F4B400]/20 hover:bg-[#E5A600]"
+                  >
+                    <LogOutIcon className="h-4 w-4" />
+                    Logout
+                  </Button>
+                </>
+                :
+                <>
+                  <Button
+                    variant="ghost"
+                    render={<Link href="/sign-in" />}
+                    nativeButton={false}
+                    onClick={() => setMenuOpen(false)}
+                    className="h-11 w-full gap-2 border border-[#F4B400]/50 bg-transparent text-sm font-semibold text-[#F4B400] hover:bg-[#F4B400]/10 hover:text-[#F4B400]"
+                  >
+                    <LogIn className="h-4 w-4" />
+                    Login
+                  </Button>
+
+                  <Button
+                    render={<Link href="/sign-up" />}
+                    nativeButton={false}
+                    onClick={() => {setMenuOpen(false)}}
+                    className="h-11 w-full gap-2 bg-[#F4B400] text-sm font-bold text-[#0B0B0B] shadow-lg shadow-[#F4B400]/20 hover:bg-[#E5A600]"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    Register
+                  </Button>
+                </>
+            }
           </div>
         </div>
       )}

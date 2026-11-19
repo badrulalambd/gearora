@@ -45,13 +45,10 @@ const categories = [
   "Power Tools",
   "Hand Tools",
   "Lifting & Access",
-  "Earthmoving",
   "Vehicles & Transport",
   "Electrical & Lighting",
   "Plumbing & Water",
-  "Scaffolding",
   "Safety & PPE",
-  "Surveying & Measurement",
   "Other",
 ]
 
@@ -92,7 +89,7 @@ const SectionCard = ({
           <Icon className="size-5 text-[#B98100] dark:text-[#F4B400]" />
         </span>
         <div className="min-w-0">
-          <CardTitle className="font-[family-name:var(--font-space-grotesk)] text-lg font-semibold">
+          <CardTitle className="font-(family-name:--font-space-grotesk) text-lg font-semibold">
             {title}
           </CardTitle>
           <CardDescription className="mt-1">{description}</CardDescription>
@@ -107,17 +104,65 @@ const AddOwnerEquipmentPage = () => {
   const { data: session } = useSession()
   const [imageFileName, setImageFileName] = useState<string | null>(null)
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const imgbbAPI = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`;
+
+  // const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault()
+
+  //   // Everything the form carries: text fields, selects (via hidden inputs),
+  //   // hidden fields (status/ownerId) and the image as a File object.
+  //   const formData = new FormData(event.currentTarget)
+  //   const payload = Object.fromEntries(formData.entries())
+
+  //   // TODO: upload `payload.image` (File) to imgbb, swap it for the CDN URL,
+  //   // then POST the payload to your Express REST API (MongoDB insert).
+  //   console.log("Add equipment form data:", payload)
+  // }
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    // Everything the form carries: text fields, selects (via hidden inputs),
-    // hidden fields (status/ownerId) and the image as a File object.
     const formData = new FormData(event.currentTarget)
     const payload = Object.fromEntries(formData.entries())
 
-    // TODO: upload `payload.image` (File) to imgbb, swap it for the CDN URL,
-    // then POST the payload to your Express REST API (MongoDB insert).
-    console.log("Add equipment form data:", payload)
+    const image = formData.get("image") as File
+
+    try {
+      // Upload image to ImgBB if an image was selected.
+      if (image && image.size > 0) {
+        const imageFormData = new FormData()
+        imageFormData.append("image", image)
+
+        const response = await fetch(imgbbAPI, {
+          method: "POST",
+          body: imageFormData,
+        })
+
+        const imageData = await response.json()
+
+        if (!response.ok || !imageData.success) {
+          throw new Error("Image upload failed. Please try again.")
+        }
+
+        // Replace the File object with the ImgBB image URL.
+        payload.image = imageData.data.url
+      } else {
+        payload.image = ""
+      }
+
+      console.log("Add equipment form data:", payload)
+
+      // Now payload.image contains the ImgBB URL.
+      // Send this payload to your Express API.
+    } catch (error) {
+      console.error("Error submitting equipment:", error)
+
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      )
+    }
   }
 
   return (

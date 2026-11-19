@@ -1,9 +1,7 @@
-import { IEquipmentType } from "@/type/type";
-
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000'
 
-export const getEquipments = async (ownerEmail : string | undefined) : Promise<IEquipmentType[]> => {
+export const getEquipments = async (ownerEmail : string | undefined) => {
     const res = await fetch(`${BASE_URL}/equipments/${ownerEmail}`, {
         method: "GET",
         cache: "no-store"

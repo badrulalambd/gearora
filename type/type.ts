@@ -1,5 +1,5 @@
-
 export interface IEquipmentType {
+    _id?: string;
     name: string;
     description: string;
     category: string;
@@ -16,4 +16,8 @@ export interface IEquipmentType {
     ownerName: string;
     ownerEmail: string;
     ownerId: string;
+}
+
+export interface IEquipments {
+    equipments: IEquipmentType[];
 }

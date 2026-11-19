@@ -33,6 +33,7 @@ const MyEquipmentOwnerPage = async () => {
     const ownerEmail = session.user.email;
 
     let equipments: IEquipmentType[] = [];
+
     let serverError = false;
 
     try {
@@ -109,9 +110,9 @@ const MyEquipmentOwnerPage = async () => {
 
     return (
         <div className="grid grid-cols-1 gap-5">
-            {equipments.map((equipment: IEquipmentType, indx) => (
+            {equipments.map((equipment) => (
                 <MyEquipmentCard
-                    key={indx}
+                    key={equipment._id}
                     equipment={equipment}
                 />
             ))}

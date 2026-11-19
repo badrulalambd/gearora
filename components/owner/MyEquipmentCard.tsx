@@ -1,22 +1,3 @@
-// import { IEquipmentType } from "@/type/type";
-
-// interface MyEquipmentCardProps{
-
-//     equipment: IEquipmentType,
-// }
-
-// const MyEquipmentCard = ({equipment} : MyEquipmentCardProps) => {
-//     return (
-//         <div>
-//             <h2>{equipment.name}</h2>
-//         </div>
-//     );
-// };
-
-// export default MyEquipmentCard;
-
-
-
 
 "use client";
 
@@ -34,18 +15,30 @@ import {
     Card,
     CardContent,
 } from "@/components/ui/card";
+import { deleteEquipment } from "@/lib/action/equipment";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface MyEquipmentCardProps {
     equipment: IEquipmentType;
 }
 
 const MyEquipmentCard = ({ equipment }: MyEquipmentCardProps) => {
+
+    const router = useRouter();
+
     const handleUpdate = () => {
         console.log("Update equipment:", equipment);
     };
 
-    const handleDelete = () => {
-        console.log("Delete equipment:", equipment);
+    const handleDelete = async () => {
+        const id : string | undefined = equipment._id;
+        const result = await deleteEquipment(id);
+        console.log("Delete equipment:", result);
+        if(result.deletedCount>0){
+            toast.success("Equipment is deleted successfully.");
+            router.refresh();
+        }
     };
 
     const handleViewDetails = () => {
@@ -55,6 +48,7 @@ const MyEquipmentCard = ({ equipment }: MyEquipmentCardProps) => {
     return (
         <Card className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-md">
             <CardContent className="p-0">
+
                 {/* Card Header */}
                 <div className="flex flex-col gap-4 border-b border-border p-4 sm:p-5 md:flex-row md:items-center md:justify-between">
                     <div className="flex items-center gap-3">
@@ -84,6 +78,7 @@ const MyEquipmentCard = ({ equipment }: MyEquipmentCardProps) => {
 
                 {/* Card Details */}
                 <div className="grid grid-cols-2 gap-4 p-4 sm:p-5 md:grid-cols-3">
+
                     {/* Rental Price */}
                     <div className="space-y-1">
                         <p className="text-xs font-medium text-muted-foreground">
@@ -128,12 +123,13 @@ const MyEquipmentCard = ({ equipment }: MyEquipmentCardProps) => {
                     </p>
 
                     <div className="flex items-center gap-2">
+
                         {/* View Details */}
                         <Button
                             variant="outline"
                             size="sm"
                             onClick={handleViewDetails}
-                            className="h-9 rounded-lg border-border bg-background px-3 transition-colors hover:border-[#F4B400] hover:bg-[#F4B400]/10 hover:text-[#B98100] dark:hover:text-[#F4B400]"
+                            className="h-9 rounded-lg border-border bg-background px-3"
                         >
                             <Eye className="mr-1.5 h-4 w-4" />
                             <span className="hidden sm:inline">
@@ -146,7 +142,7 @@ const MyEquipmentCard = ({ equipment }: MyEquipmentCardProps) => {
                             variant="outline"
                             size="sm"
                             onClick={handleUpdate}
-                            className="h-9 rounded-lg border-border bg-background px-3 transition-colors hover:border-[#F4B400] hover:bg-[#F4B400]/10 hover:text-[#B98100] dark:hover:text-[#F4B400]"
+                            className="h-9 rounded-lg border-border bg-background px-3"
                         >
                             <Pencil className="mr-1.5 h-4 w-4" />
                             Update
@@ -157,7 +153,7 @@ const MyEquipmentCard = ({ equipment }: MyEquipmentCardProps) => {
                             variant="outline"
                             size="sm"
                             onClick={handleDelete}
-                            className="h-9 rounded-lg border-border bg-background px-3 text-destructive transition-colors hover:border-red-500/30 hover:bg-red-500/10 hover:text-red-500"
+                            className="h-9 rounded-lg border-border bg-background px-3 text-destructive"
                         >
                             <Trash2 className="mr-1.5 h-4 w-4" />
                             Delete

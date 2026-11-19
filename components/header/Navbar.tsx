@@ -30,7 +30,6 @@ const Navbar = () => {
 
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  console.log("User Session: ", user);
 
   // Detect hydration without setState-in-effect: false during SSR,
   // true on the client afterwards (avoids a theme-icon mismatch).

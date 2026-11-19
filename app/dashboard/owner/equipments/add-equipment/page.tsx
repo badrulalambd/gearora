@@ -39,6 +39,8 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { useSession } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
+import { createEquipment } from "@/lib/action/equipment"
+import { IEquipmentType } from "@/type/type"
 
 const categories = [
   "Construction",
@@ -106,28 +108,64 @@ const AddOwnerEquipmentPage = () => {
 
   const imgbbAPI = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`;
 
-  // const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
   //   event.preventDefault()
 
-  //   // Everything the form carries: text fields, selects (via hidden inputs),
-  //   // hidden fields (status/ownerId) and the image as a File object.
   //   const formData = new FormData(event.currentTarget)
   //   const payload = Object.fromEntries(formData.entries())
 
-  //   // TODO: upload `payload.image` (File) to imgbb, swap it for the CDN URL,
-  //   // then POST the payload to your Express REST API (MongoDB insert).
-  //   console.log("Add equipment form data:", payload)
+
+  //   const image = formData.get("image") as File
+
+  //   try {
+  //     // Upload image to ImgBB if an image was selected.
+  //     if (image && image.size > 0) {
+  //       const imageFormData = new FormData()
+  //       imageFormData.append("image", image)
+
+  //       const response = await fetch(imgbbAPI, {
+  //         method: "POST",
+  //         body: imageFormData,
+  //       })
+
+  //       const imageData = await response.json()
+
+  //       if (!response.ok || !imageData.success) {
+  //         throw new Error("Image upload failed. Please try again.")
+  //       }
+
+  //       // Replace the File object with the ImgBB image URL.
+  //       payload.image = imageData.data.url
+  //     } else {
+  //       payload.image = ""
+  //     }
+
+  //     console.log("Add equipment form data:", payload)
+
+  //     const UploadResult = await createEquipment(payload);
+
+  //     // Now payload.image contains the ImgBB URL.
+  //     // Send this payload to your Express API.
+  //   } catch (error) {
+  //     console.error("Error submitting equipment:", error)
+
+  //     alert(
+  //       error instanceof Error
+  //         ? error.message
+  //         : "Something went wrong. Please try again."
+  //     )
+  //   }
   // }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)
-    const payload = Object.fromEntries(formData.entries())
-
     const image = formData.get("image") as File
 
     try {
+      let imageUrl = ""
+
       // Upload image to ImgBB if an image was selected.
       if (image && image.size > 0) {
         const imageFormData = new FormData()
@@ -144,16 +182,35 @@ const AddOwnerEquipmentPage = () => {
           throw new Error("Image upload failed. Please try again.")
         }
 
-        // Replace the File object with the ImgBB image URL.
-        payload.image = imageData.data.url
-      } else {
-        payload.image = ""
+        imageUrl = imageData.data.url
+      }
+
+      // Create a properly typed equipment payload.
+      const payload: IEquipmentType = {
+        name: formData.get("name") as string,
+        description: formData.get("description") as string,
+        category: formData.get("category") as string,
+        brand: formData.get("brand") as string,
+        model: formData.get("model") as string,
+        location: formData.get("location") as string,
+        rentalPrice: Number(formData.get("rentalPrice")),
+        rentalType: formData.get("rentalType") as IEquipmentType["rentalType"],
+        quantity: Number(formData.get("quantity")),
+        condition: formData.get("condition") as IEquipmentType["condition"],
+        image: imageUrl,
+        rentalTerms: formData.get("rentalTerms") as string,
+        status: "Pending",
+        ownerName: session?.user?.name ?? "",
+        ownerEmail: session?.user?.email ?? "",
+        ownerId: session?.user?.id ?? "",
       }
 
       console.log("Add equipment form data:", payload)
 
-      // Now payload.image contains the ImgBB URL.
-      // Send this payload to your Express API.
+      const uploadResult = await createEquipment(payload)
+
+      console.log("Equipment creation result:", uploadResult)
+
     } catch (error) {
       console.error("Error submitting equipment:", error)
 

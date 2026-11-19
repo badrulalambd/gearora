@@ -4,7 +4,7 @@ import { IEquipmentType } from "@/type/type";
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000'
 
 
-export const createEquipment = async (payload : IEquipmentType): Promise<IEquipmentType> => {
+export const createEquipment = async (payload : IEquipmentType) => {
     const res = await fetch(`${BASE_URL}/equipments`, {
         method: "POST",
         headers: {

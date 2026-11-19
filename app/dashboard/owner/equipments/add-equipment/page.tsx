@@ -41,6 +41,8 @@ import { useSession } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
 import { createEquipment } from "@/lib/action/equipment"
 import { IEquipmentType } from "@/type/type"
+import toast from "react-hot-toast"
+import { useRouter } from "next/navigation"
 
 const categories = [
   "Construction",
@@ -105,6 +107,7 @@ const SectionCard = ({
 const AddOwnerEquipmentPage = () => {
   const { data: session } = useSession()
   const [imageFileName, setImageFileName] = useState<string | null>(null)
+  const router = useRouter();
 
   const imgbbAPI = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`;
 
@@ -207,9 +210,14 @@ const AddOwnerEquipmentPage = () => {
 
       console.log("Add equipment form data:", payload)
 
-      const uploadResult = await createEquipment(payload)
+      const result = await createEquipment(payload)
 
-      console.log("Equipment creation result:", uploadResult)
+      console.log("Equipment creation result:", result)
+      if(result.insertedId){
+        toast.success("Equipment is added successfully.");
+        console.log("InseretedId: ", result.insertedId)
+        router.push("/dashboard/owner/equipments");
+      }
 
     } catch (error) {
       console.error("Error submitting equipment:", error)
@@ -230,7 +238,7 @@ const AddOwnerEquipmentPage = () => {
           <Plus className="size-6 text-[#B98100] dark:text-[#F4B400]" />
         </span>
         <div className="min-w-0">
-          <h1 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-foreground sm:text-3xl">
+          <h1 className="font-(family-name:--font-space-grotesk) text-2xl font-bold text-foreground sm:text-3xl">
             Add New Equipment
           </h1>
           <p className="mt-1.5 max-w-2xl text-sm leading-6 text-muted-foreground">

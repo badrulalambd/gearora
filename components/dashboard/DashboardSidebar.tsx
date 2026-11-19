@@ -57,7 +57,7 @@ const menuItemsByRole: Record<"customer" | "owner" | "admin", MenuItem[]> = {
     },
     {
       name: "My Equipment Rental",
-      url: "/dashboard/owner/rentels",
+      url: "/dashboard/owner/rentals",
       icon: Briefcase,
     },
     { name: "Profile", url: "/dashboard/owner/profile", icon: Settings },

@@ -45,7 +45,7 @@ const SignInPage = () => {
 
   return (
     <AuthShell
-      title="Welcome back"
+      title="Welcome to Gearora"
       subtitle="Log in to continue renting the right gear."
       footer={
         <>

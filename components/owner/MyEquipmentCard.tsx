@@ -10,6 +10,7 @@ import { deleteEquipment } from "@/lib/action/equipment"
 import EquipmentUpdateDialog from "@/components/owner/EquipmentUpdateDialog"
 import { useRouter } from "next/navigation"
 import toast from "react-hot-toast"
+import Link from "next/link"
 
 interface MyEquipmentCardProps {
   equipment: IEquipmentType
@@ -107,15 +108,16 @@ const MyEquipmentCard = ({ equipment }: MyEquipmentCardProps) => {
 
           <div className="flex items-center gap-2">
             {/* View Details */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleViewDetails}
-              className="h-9 rounded-lg border-border bg-background px-3"
-            >
-              <Eye className="mr-1.5 h-4 w-4" />
-              <span className="hidden sm:inline">View Details</span>
-            </Button>
+            <Link href={`/equipments/${equipment._id}`}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 rounded-lg border-border bg-background px-3"
+              >
+                <Eye className="mr-1.5 h-4 w-4" />
+                <span className="hidden sm:inline">View Details</span>
+              </Button>
+            </Link>
 
             {/* Update */}
             <EquipmentUpdateDialog equipment={equipment} />

@@ -86,7 +86,7 @@ const EquipmentDetailPage = async ({ params }: EquipmentDetailPageProps) => {
   const available = equipment.quantity > 0
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-6">
+    <div className="py-5 md:py-10 px-5 md:px-5 mx-auto w-full max-w-6xl space-y-6">
       {/* Back link */}
       <Link
         href="/equipments"

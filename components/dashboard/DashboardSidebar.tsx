@@ -39,8 +39,8 @@ type MenuItem = {
 const menuItemsByRole: Record<"customer" | "owner" | "admin", MenuItem[]> = {
   customer: [
     { name: "Dashboard", url: "/dashboard/customer", icon: LayoutDashboard },
-    { name: "My Rentals", url: "/dashboard/customer/rentals", icon: Briefcase },
-    { name: "Favorites", url: "/dashboard/customer/saved", icon: Bookmark },
+    { name: "My Rentals", url: "/dashboard/customer/my-rentals", icon: Briefcase },
+    { name: "Favorites", url: "/dashboard/customer/saved-rentals", icon: Bookmark },
     { name: "Profile", url: "/dashboard/customer/profile", icon: Settings },
   ],
   owner: [

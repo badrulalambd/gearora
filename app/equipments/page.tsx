@@ -64,7 +64,7 @@ const AllEquipmentPage = async ({ searchParams }: AllEquipmentPageProps) => {
   // Backend server error fallback
   if (serverError) {
     return (
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="p-5 md:p-10 mx-auto w-full max-w-5xl">
         <div className="flex min-h-100 flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card px-6 py-12 text-center">
           <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-500/10">
             <ServerCrash className="h-8 w-8 text-red-500" />
@@ -92,7 +92,7 @@ const AllEquipmentPage = async ({ searchParams }: AllEquipmentPageProps) => {
   }
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-6">
+    <div className="p-5 md:p-10 mx-auto w-full max-w-7xl space-y-6">
       {/* Page heading */}
       <div className="flex items-start gap-4">
         <span className="rounded-xl bg-[#F4B400]/15 p-3">

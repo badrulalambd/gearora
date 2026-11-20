@@ -35,21 +35,6 @@ import { updateUserDetail } from "@/lib/action/users"
 import { useSession } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
 
-/**
- * The session user carries `phone`/`address` at runtime (they live in the
- * MongoDB user document) but the BetterAuth client types don't declare them,
- * so the shape is asserted here instead of relying on inferred types.
- */
-type ProfileUser = {
-  id: string
-  name?: string | null
-  email: string
-  image?: string | null
-  role?: string
-  phone?: string | null
-  address?: string | null
-}
-
 const fieldClasses =
   "h-11 focus-visible:border-[#F4B400]/60 focus-visible:ring-[#F4B400]/25"
 
@@ -97,7 +82,7 @@ const ProfileForm = () => {
 
   const imgbbAPI = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`
 
-  const user = data?.user as ProfileUser | undefined
+  const user = data?.user
 
   const heading = (
     <div className="flex items-start gap-4">

@@ -36,10 +36,12 @@ export const auth = betterAuth({
       },
       phone: {
         type: "string",
+        input: true,
         required: false,
       },
       address: {
         type: "string",
+        input: true,
         required: false,
       },
     },

@@ -20,6 +20,16 @@ const userRoleInference = {
                         required: false,
                         defaultValue: "seeker",
                     },
+                    phone: {
+                        type: "string",
+                        input: true,
+                        required: false,
+                    } as const,
+                    address: {
+                        type: "string",
+                        input: true,
+                        required: false,
+                    } as const,
                 },
             },
         },

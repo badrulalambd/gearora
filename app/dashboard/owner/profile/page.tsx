@@ -1,11 +1,7 @@
-import React from 'react';
+import ProfileForm from "@/components/profile/ProfileForm"
 
 const OwnerProfilePage = () => {
-    return (
-        <div>
-            Owner Profile Page
-        </div>
-    );
-};
+  return <ProfileForm />
+}
 
-export default OwnerProfilePage;
+export default OwnerProfilePage

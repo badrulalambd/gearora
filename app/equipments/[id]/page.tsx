@@ -5,11 +5,14 @@ import {
   ArrowLeft,
   Box,
   FileText,
+  Mail,
   MapPin,
   Package,
   ScrollText,
   ShieldCheck,
+  UserRound,
   Wrench,
+
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -22,6 +25,7 @@ import {
 } from "@/components/ui/card"
 import { getEquipmentById } from "@/lib/api/equipment"
 import { IEquipmentType } from "@/type/type"
+import EquipmentActions from "@/components/equipment/EquipmentActions"
 
 interface EquipmentDetailPageProps {
   params: Promise<{ id: string }>
@@ -54,7 +58,7 @@ const EquipmentDetailPage = async ({ params }: EquipmentDetailPageProps) => {
 
   if (serverError) {
     return (
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="py-5 md:py-10 px-5 mx-auto w-full max-w-5xl">
         <div className="flex min-h-100 flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card px-6 py-12 text-center">
           <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-500/10">
             <Package className="h-8 w-8 text-red-500" />
@@ -237,6 +241,52 @@ const EquipmentDetailPage = async ({ params }: EquipmentDetailPageProps) => {
           </CardContent>
         </Card>
       </div>
+      {/* Owner Information */}
+      <Card className="shadow-sm">
+        <CardHeader className="border-b border-border pb-4">
+          <div className="flex items-center gap-3">
+            <span className="rounded-lg bg-[#F4B400]/15 p-2.5">
+              <UserRound className="size-5 text-[#B98100] dark:text-[#F4B400]" />
+            </span>
+
+            <div className="min-w-0">
+              <CardTitle className="font-(family-name:--font-space-grotesk) text-lg font-semibold">
+                Owner Information
+              </CardTitle>
+
+              <CardDescription className="mt-1">
+                Contact details of the equipment owner.
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+
+        <CardContent className="grid gap-4 sm:grid-cols-2">
+          <div className="space-y-1.5">
+            <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+              <UserRound className="size-3.5 text-[#B98100] dark:text-[#F4B400]" />
+              Owner Name
+            </p>
+
+            <p className="text-sm font-semibold text-foreground">
+              {equipment.ownerName || "—"}
+            </p>
+          </div>
+
+          <div className="space-y-1.5">
+            <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+              <Mail className="size-3.5 text-[#B98100] dark:text-[#F4B400]" />
+              Owner Email
+            </p>
+
+            <p className="break-all text-sm font-semibold text-foreground">
+              {equipment.ownerEmail || "—"}
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+      {/* Equipment Actions */}
+      <EquipmentActions />
     </div>
   )
 }

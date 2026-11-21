@@ -32,7 +32,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { updateUserDetail } from "@/lib/action/users"
-import { useSession } from "@/lib/auth-client"
+import { authClient, useSession } from "@/lib/auth-client"
 import { cn } from "@/lib/utils"
 
 const fieldClasses =
@@ -160,6 +160,12 @@ const ProfileForm = () => {
         name,
         phone,
         address,
+        ...(imageUrl ? { image: imageUrl } : {}),
+      })
+
+      // Update Better Auth user data
+      await authClient.updateUser({
+        name,
         ...(imageUrl ? { image: imageUrl } : {}),
       })
 

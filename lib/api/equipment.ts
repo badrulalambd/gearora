@@ -74,3 +74,15 @@ export const getAdminEquipments = async (): Promise<IEquipmentType[]> => {
   }
   return res.json()
 }
+
+//Get 6 equipment for featured equipment section on the home page
+export const getFeaturedEquipment = async () => {
+  const res = await fetch(`${BASE_URL}/featured-equipments`, {
+    method: "GET",
+    cache: "no-store",
+  })
+  if (!res.ok) {
+    throw new Error(`Failed to fetch equipments: ${res.status}`)
+  }
+  return res.json()
+}

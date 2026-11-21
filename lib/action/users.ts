@@ -27,3 +27,42 @@ export const updateUserDetail = async (
 
   return data
 }
+
+//admin All Users page: change a user's role through the backend API
+export const updateUserRole = async (
+  id: string,
+  role: "customer" | "owner" | "admin"
+) => {
+  const res = await fetch(`${BASE_URL}/users/${id}/role`, {
+    method: "PATCH",
+    cache: "no-store",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ role }),
+  })
+
+  const data = await res.json().catch(() => null)
+
+  if (!res.ok || !data) {
+    throw new Error(data?.message ?? "Failed to update role.")
+  }
+
+  return data
+}
+
+//admin All Users page: delete a customer or owner after confirmation
+export const deleteUserAccount = async (id: string) => {
+  const res = await fetch(`${BASE_URL}/users/${id}`, {
+    method: "DELETE",
+    cache: "no-store",
+  })
+
+  const data = await res.json().catch(() => null)
+
+  if (!res.ok || !data) {
+    throw new Error(data?.message ?? "Failed to delete user.")
+  }
+
+  return data
+}

@@ -62,3 +62,15 @@ export const getEquipmentById = async (
   }
   return res.json()
 }
+
+//Get every equipment listing (any status) for the admin All Equipment page
+export const getAdminEquipments = async (): Promise<IEquipmentType[]> => {
+  const res = await fetch(`${BASE_URL}/equipments/all`, {
+    method: "GET",
+    cache: "no-store",
+  })
+  if (!res.ok) {
+    throw new Error(`Failed to fetch equipments: ${res.status}`)
+  }
+  return res.json()
+}

@@ -66,3 +66,26 @@ export interface IBookingType {
     currency?: string;
     createdAt: string;
 }
+
+export type TUserRole = "customer" | "owner" | "admin";
+
+export interface IUserType {
+    _id: string;
+    name: string;
+    email: string;
+    image?: string;
+    role: TUserRole;
+    createdAt: string;
+    phone?: string;
+    address?: string;
+}
+
+//Booking row for the admin All Rentals page, enriched on the backend with
+//customer, owner and equipment status details.
+export interface IAdminBookingType extends IBookingType {
+    customerName?: string;
+    customerImage?: string;
+    ownerName?: string;
+    ownerEmail?: string;
+    equipmentStatus?: string;
+}

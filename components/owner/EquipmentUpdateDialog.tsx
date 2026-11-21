@@ -77,14 +77,27 @@ const textareaClasses =
 
 interface EquipmentUpdateDialogProps {
   equipment: IEquipmentType
+  /** Controlled open state — lets the admin Actions dropdown open the dialog. */
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  /** Set to false when the caller renders its own way to open the dialog. */
+  showTrigger?: boolean
 }
 
-const EquipmentUpdateDialog = ({ equipment }: EquipmentUpdateDialogProps) => {
+const EquipmentUpdateDialog = ({
+  equipment,
+  open: controlledOpen,
+  onOpenChange,
+  showTrigger = true,
+}: EquipmentUpdateDialogProps) => {
   const router = useRouter()
 
-  const [open, setOpen] = useState(false)
+  const [internalOpen, setInternalOpen] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [imageFileName, setImageFileName] = useState<string | null>(null)
+
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : internalOpen
 
   const imgbbAPI = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`
 
@@ -92,7 +105,10 @@ const EquipmentUpdateDialog = ({ equipment }: EquipmentUpdateDialogProps) => {
     if (!nextOpen) {
       setImageFileName(null)
     }
-    setOpen(nextOpen)
+    if (!isControlled) {
+      setInternalOpen(nextOpen)
+    }
+    onOpenChange?.(nextOpen)
   }
 
   const handleUpdate = async (event: FormEvent<HTMLFormElement>) => {
@@ -170,18 +186,20 @@ const EquipmentUpdateDialog = ({ equipment }: EquipmentUpdateDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger
-        render={
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-9 rounded-lg border-border bg-background px-3"
-          />
-        }
-      >
-        <Pencil className="mr-1.5 h-4 w-4" />
-        Update
-      </DialogTrigger>
+      {showTrigger && (
+        <DialogTrigger
+          render={
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-9 rounded-lg border-border bg-background px-3"
+            />
+          }
+        >
+          <Pencil className="mr-1.5 h-4 w-4" />
+          Update
+        </DialogTrigger>
+      )}
 
       <DialogContent className="flex max-h-[calc(100dvh-2rem)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl">
         <DialogHeader className="border-b border-border px-4 pt-5 pr-10 pb-4 sm:px-6">

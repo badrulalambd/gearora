@@ -38,3 +38,26 @@ export const deleteEquipment = async (id: string | undefined) => {
   })
   return res.json()
 }
+
+//admin All Equipment page: approve or reject a listing's status
+export const updateEquipmentStatus = async (
+  id: string | undefined,
+  status: "Pending" | "Approved" | "Rejected"
+) => {
+  const res = await fetch(`${BASE_URL}/equipments/${id}/status`, {
+    method: "PATCH",
+    cache: "no-store",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ status }),
+  })
+
+  const data = await res.json().catch(() => null)
+
+  if (!res.ok || !data) {
+    throw new Error(data?.message ?? "Failed to update status.")
+  }
+
+  return data
+}

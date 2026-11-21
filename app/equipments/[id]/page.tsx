@@ -286,7 +286,9 @@ const EquipmentDetailPage = async ({ params }: EquipmentDetailPageProps) => {
         </CardContent>
       </Card>
       {/* Equipment Actions */}
-      <EquipmentActions />
+      <EquipmentActions 
+      id = {equipment._id}
+      />
     </div>
   )
 }

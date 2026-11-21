@@ -1,4 +1,4 @@
-import { IEquipmentType } from "@/type/type"
+import { ICategoryCount, IEquipmentType } from "@/type/type"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"
 
@@ -37,6 +37,18 @@ export const getAllEquipments = async (
 //Get distinct categories of approved equipment for the public page's filter
 export const getEquipmentCategories = async (): Promise<string[]> => {
   const res = await fetch(`${BASE_URL}/equipments/categories`, {
+    method: "GET",
+    cache: "no-store",
+  })
+  if (!res.ok) {
+    throw new Error(`Failed to fetch equipment categories: ${res.status}`)
+  }
+  return res.json()
+}
+
+//Get popular categories of approved equipment for the home page categories section
+export const getPopularEquipmentCategories = async (): Promise<ICategoryCount[]> => {
+  const res = await fetch(`${BASE_URL}/equipments/popular-categories`, {
     method: "GET",
     cache: "no-store",
   })

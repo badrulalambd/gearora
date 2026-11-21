@@ -45,14 +45,15 @@ import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
 
 const categories = [
-  "Construction",
-  "Power Tools",
-  "Hand Tools",
+  "Construction Equipment",
+  "Photography Equipment",
+  "Vehicles & Transportation",
   "Lifting & Access",
-  "Vehicles & Transport",
   "Electrical & Lighting",
   "Plumbing & Water",
   "Safety & PPE",
+  "Agriculture Equipment",
+  "Event Equipment",
   "Other",
 ]
 

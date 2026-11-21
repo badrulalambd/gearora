@@ -89,3 +89,8 @@ export interface IAdminBookingType extends IBookingType {
     ownerEmail?: string;
     equipmentStatus?: string;
 }
+
+export interface ICategoryCount {
+  category: string;
+  totalEquipment: number;
+}

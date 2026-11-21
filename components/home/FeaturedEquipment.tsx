@@ -1,28 +1,3 @@
-// import { getFeaturedEquipment } from "@/lib/api/equipment";
-// import EquipmentCard from "../equipment/EquipmentCard";
-// import { IEquipmentType } from "@/type/type";
-
-// const FeaturedEquipment = async () => {
-//     let featuredEquipmentData: IEquipmentType[] = []
-//     featuredEquipmentData = await getFeaturedEquipment();
-
-//     return (
-//         <div className="p-5 md:p-10 mx-auto w-full max-w-7xl space-y-6">
-//             <div>Featured Equipment</div>
-//             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-//                 {
-//                     featuredEquipmentData.map((equipment) => <EquipmentCard 
-//                     key={equipment._id}
-//                     equipment={equipment}
-//                     />)
-//                 }
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default FeaturedEquipment;
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -123,7 +98,7 @@ const FeaturedEquipment = () => {
                         </motion.div>
 
                         {/* Title */}
-                        <h2 className="font-(family-name:--font-space-grotesk) text-3xl font-bold leading-[1.2] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+                        <h2 className="text-3xl font-bold leading-[1.2] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
                             Find the Right Gear.
                         </h2>
 

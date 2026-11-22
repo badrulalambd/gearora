@@ -16,10 +16,10 @@ const userRoleInference = {
             user: {
                 fields: {
                     role: {
-                        type: ["seeker", "recruiter", "admin"],
+                        type: ["customer", "owner", "admin"],
                         input: true,
                         required: false,
-                        defaultValue: "seeker",
+                        defaultValue: "customer",
                     },
                     phone: {
                         type: "string",

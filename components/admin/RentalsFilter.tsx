@@ -25,6 +25,9 @@ const RentalsFilter = ({ status }: { status: string }) => {
   const pathname = usePathname()
 
   const handleValueChange = (value: string | null) => {
+    if (!value) {
+      return
+    }
     router.push(value === "all" ? pathname : `${pathname}?status=${value}`)
   }
 

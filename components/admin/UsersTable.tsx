@@ -46,6 +46,9 @@ const UsersTable = ({ users }: { users: IUserType[] }) => {
   //Role dropdown → backend update. The value stays controlled, so a failed
   //request leaves the visible role untouched.
   const handleRoleChange = async (value: string | null, user: IUserType) => {
+    if (!value || value === user.role) {
+      return
+    }
     const role = value as IUserType["role"]
 
     try {

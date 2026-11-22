@@ -94,3 +94,58 @@ export interface ICategoryCount {
   category: string;
   totalEquipment: number;
 }
+
+//Dashboard analytics — one bucket per month for the recharts bar charts
+export interface IMonthlyStat {
+    month: string;
+    value: number;
+}
+
+export interface IPendingEquipment {
+    _id: string;
+    name: string;
+    ownerName: string;
+    category: string;
+}
+
+export interface IAdminStats {
+    totalUsers: number;
+    totalEquipments: number;
+    totalBookings: number;
+    pendingApprovals: number;
+    completedRentals: number;
+    totalRevenue: number;
+    monthlyBookings: IMonthlyStat[];
+    pendingEquipments: IPendingEquipment[];
+}
+
+export interface IRecentBooking {
+    _id: string;
+    equipmentName: string;
+    customerName: string;
+    customerEmail: string;
+    startDate: string;
+    endDate: string;
+    totalAmount: number;
+    status: string;
+    createdAt: string;
+}
+
+export interface IOwnerStats {
+    totalEquipment: number;
+    completedRentals: number;
+    totalEarnings: number;
+    monthlyEarnings: IMonthlyStat[];
+    recentBookings: IRecentBooking[];
+}
+
+export interface ICustomerStats {
+    favorites: IFavoriteType[];
+    rentals: IBookingType[];
+    totalFavorites: number;
+    totalRentals: number;
+    confirmedRentals: number;
+    pendingRentals: number;
+    totalSpent: number;
+    monthlyRentals: IMonthlyStat[];
+}

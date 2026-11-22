@@ -5,16 +5,25 @@ import { ServerCrash, ShieldAlert } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 //Shown on admin routes when the visitor isn't signed in or isn't an admin.
-export const AccessDenied = ({ signedIn = false }: { signedIn?: boolean }) => (
+export const AccessDenied = ({
+  signedIn = false,
+  title,
+  message,
+}: {
+  signedIn?: boolean
+  title?: string
+  message?: string
+}) => (
   <div className="flex min-h-100 flex-col items-center justify-center rounded-2xl border border-border bg-card p-8 text-center">
     <ShieldAlert className="mb-4 h-12 w-12 text-[#F4B400]" />
     <h2 className="text-xl font-bold text-foreground">
-      {signedIn ? "Access Denied" : "Authentication Required"}
+      {title ?? (signedIn ? "Access Denied" : "Authentication Required")}
     </h2>
     <p className="mt-2 max-w-md text-sm text-muted-foreground">
-      {signedIn
-        ? "This area is restricted to administrator accounts."
-        : "Please log in with an administrator account to view this page."}
+      {message ??
+        (signedIn
+          ? "This area is restricted to administrator accounts."
+          : "Please log in with an administrator account to view this page.")}
     </p>
     <Button
       render={<Link href="/sign-in" />}

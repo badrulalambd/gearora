@@ -105,11 +105,8 @@ const AllRentalsPage = async ({ searchParams }: AllRentalsPageProps) => {
           </span>{" "}
           {bookings.length === 1 ? "rental" : "rentals"} found
         </p>
-        
         {/* Filter on the all rentals page */}
-
-        {/* <RentalsFilter status={status} /> */}
-
+        <RentalsFilter status={status} />
       </div>
 
       {bookings.length === 0 ? (

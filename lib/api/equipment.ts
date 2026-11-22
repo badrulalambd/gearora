@@ -14,6 +14,18 @@ export const getEquipments = async (ownerEmail: string | undefined) => {
   return res.json()
 }
 
+//Get equipments for owner my-equipment-rental page with the approved equipment
+export const getEquipmentRental = async (ownerEmail: string | undefined) => {
+  const res = await fetch(`${BASE_URL}/equipment-rental/${ownerEmail}`, {
+    method: "GET",
+    cache: "no-store",
+  })
+  if (!res.ok) {
+    throw new Error(`Failed to fetch equipments: ${res.status}`)
+  }
+  return res.json()
+}
+
 //Get approved equipments for the public all-equipment page.
 //Search, filtering and sorting all happen on the backend — `query` is the
 //URLSearchParams built from the page's searchParams.

@@ -24,7 +24,7 @@ const MyEquipmentOwnerPage = async () => {
                     Please log in to view your equipment.
                 </p>
                 <Button className="mt-6 bg-[#F4B400] text-black hover:bg-[#DFA300]">
-                    <Link href="/login">Sign In</Link>
+                    <Link href="/sign-in">Sign In</Link>
                 </Button>
             </div>
         );

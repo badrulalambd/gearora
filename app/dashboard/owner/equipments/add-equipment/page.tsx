@@ -112,55 +112,6 @@ const AddOwnerEquipmentPage = () => {
 
   const imgbbAPI = `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`;
 
-  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault()
-
-  //   const formData = new FormData(event.currentTarget)
-  //   const payload = Object.fromEntries(formData.entries())
-
-
-  //   const image = formData.get("image") as File
-
-  //   try {
-  //     // Upload image to ImgBB if an image was selected.
-  //     if (image && image.size > 0) {
-  //       const imageFormData = new FormData()
-  //       imageFormData.append("image", image)
-
-  //       const response = await fetch(imgbbAPI, {
-  //         method: "POST",
-  //         body: imageFormData,
-  //       })
-
-  //       const imageData = await response.json()
-
-  //       if (!response.ok || !imageData.success) {
-  //         throw new Error("Image upload failed. Please try again.")
-  //       }
-
-  //       // Replace the File object with the ImgBB image URL.
-  //       payload.image = imageData.data.url
-  //     } else {
-  //       payload.image = ""
-  //     }
-
-  //     console.log("Add equipment form data:", payload)
-
-  //     const UploadResult = await createEquipment(payload);
-
-  //     // Now payload.image contains the ImgBB URL.
-  //     // Send this payload to your Express API.
-  //   } catch (error) {
-  //     console.error("Error submitting equipment:", error)
-
-  //     alert(
-  //       error instanceof Error
-  //         ? error.message
-  //         : "Something went wrong. Please try again."
-  //     )
-  //   }
-  // }
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 

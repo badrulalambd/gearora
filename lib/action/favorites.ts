@@ -1,4 +1,6 @@
+"use server"
 import { IFavoriteType, TCommonApiResponse } from "@/type/type"
+import { authFetch } from "../core/server"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"
 
@@ -26,13 +28,17 @@ export const addFavorite = async (payload: {
 //All favorites saved by this customer (newest first)
 export const getFavorites = async (email: string): Promise<IFavoriteType[]> => {
   try {
-    const res = await fetch(
-      `${BASE_URL}/favorites/${encodeURIComponent(email)}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    )
+    const api = `${BASE_URL}/favorites/${encodeURIComponent(email)}`
+    const res = await authFetch(api)
+
+    // const res = await fetch(
+    //   `${BASE_URL}/favorites/${encodeURIComponent(email)}`,
+    //   {
+    //     method: "GET",
+    //     cache: "no-store",
+    //   }
+    // )
+
     if (!res.ok) return []
     return (await res.json()) as IFavoriteType[]
   } catch (err) {

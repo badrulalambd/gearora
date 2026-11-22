@@ -1,13 +1,21 @@
+"use server"
+
 import { ICategoryCount, IEquipmentType } from "@/type/type"
+import { authFetch } from "../core/server"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"
 
 //Get equipments for owner my-equipment page
+//......................................................................................................
 export const getEquipments = async (ownerEmail: string | undefined) => {
-  const res = await fetch(`${BASE_URL}/equipments/${ownerEmail}`, {
-    method: "GET",
-    cache: "no-store",
-  })
+  const api = `${BASE_URL}/equipments/${ownerEmail}`
+  const res = await authFetch(api);
+
+  // const res = await fetch(`${BASE_URL}/equipments/${ownerEmail}`, {
+  //   method: "GET",
+  //   cache: "no-store",
+  // })
+
   if (!res.ok) {
     throw new Error(`Failed to fetch equipments: ${res.status}`)
   }
@@ -16,10 +24,14 @@ export const getEquipments = async (ownerEmail: string | undefined) => {
 
 //Get equipments for owner my-equipment-rental page with the approved equipment
 export const getEquipmentRental = async (ownerEmail: string | undefined) => {
-  const res = await fetch(`${BASE_URL}/equipment-rental/${ownerEmail}`, {
-    method: "GET",
-    cache: "no-store",
-  })
+  const api = `${BASE_URL}/equipment-rental/${ownerEmail}`
+  const res = await authFetch(api);
+  
+  // const res = await fetch(`${BASE_URL}/equipment-rental/${ownerEmail}`, {
+  //   method: "GET",
+  //   cache: "no-store",
+  // })
+  
   if (!res.ok) {
     throw new Error(`Failed to fetch equipments: ${res.status}`)
   }
@@ -71,13 +83,20 @@ export const getPopularEquipmentCategories = async (): Promise<ICategoryCount[]>
 }
 
 //Get a single equipment for the detail page. Returns null when it doesn't exist.
+//..........................................................................................
 export const getEquipmentById = async (
   id: string
 ): Promise<IEquipmentType | null> => {
-  const res = await fetch(`${BASE_URL}/equipment/${id}`, {
-    method: "GET",
-    cache: "no-store",
-  })
+  const api = `${BASE_URL}/equipment/${id}`
+
+  const res = await authFetch(api);
+
+  // const res = await fetch(`${BASE_URL}/equipment/${id}`, {
+  //   method: "GET",
+  //   cache: "no-store",
+  // })
+
+
   if (res.status === 400 || res.status === 404) {
     return null
   }
@@ -89,10 +108,14 @@ export const getEquipmentById = async (
 
 //Get every equipment listing (any status) for the admin All Equipment page
 export const getAdminEquipments = async (): Promise<IEquipmentType[]> => {
-  const res = await fetch(`${BASE_URL}/equipments/all`, {
-    method: "GET",
-    cache: "no-store",
-  })
+  const api = `${BASE_URL}/equipments/all`
+  const res = await authFetch(api)
+
+  // const res = await fetch(`${BASE_URL}/equipments/all`, {
+  //   method: "GET",
+  //   cache: "no-store",
+  // })
+
   if (!res.ok) {
     throw new Error(`Failed to fetch equipments: ${res.status}`)
   }

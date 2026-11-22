@@ -1,3 +1,5 @@
+import { protectedMutation } from "../core/server"
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"
 
 //call api to update a user's profile details (customer/owner/admin profile page)
@@ -33,14 +35,17 @@ export const updateUserRole = async (
   id: string,
   role: "customer" | "owner" | "admin"
 ) => {
-  const res = await fetch(`${BASE_URL}/users/${id}/role`, {
-    method: "PATCH",
-    cache: "no-store",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ role }),
-  })
+  const api = `${BASE_URL}/users/${id}/role`
+  const res = await protectedMutation(api, "PATCH", role)
+
+  // const res = await fetch(`${BASE_URL}/users/${id}/role`, {
+  //   method: "PATCH",
+  //   cache: "no-store",
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  //   body: JSON.stringify({ role }),
+  // })
 
   const data = await res.json().catch(() => null)
 

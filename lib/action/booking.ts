@@ -3,6 +3,7 @@ import {
   IBookingType,
   TCommonApiResponse,
 } from "@/type/type"
+import { authFetch } from "../core/server"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"
 
@@ -54,13 +55,17 @@ export const confirmBooking = async (sessionId: string) => {
 //Confirmed rentals of one customer — for the My Rentals page
 export const getMyRentals = async (email: string): Promise<IBookingType[]> => {
   try {
-    const res = await fetch(
-      `${BASE_URL}/bookings/customer/${encodeURIComponent(email)}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    )
+    const api = `${BASE_URL}/bookings/customer/${encodeURIComponent(email)}`
+    const res = await authFetch(api)
+
+    // const res = await fetch(
+    //   `${BASE_URL}/bookings/customer/${encodeURIComponent(email)}`,
+    //   {
+    //     method: "GET",
+    //     cache: "no-store",
+    //   }
+    // )
+
     if (!res.ok) return []
     return (await res.json()) as IBookingType[]
   } catch (err) {
@@ -78,13 +83,17 @@ export const getAllBookings = async (
   if (status) query.set("status", status)
   const queryString = query.toString()
 
-  const res = await fetch(
-    `${BASE_URL}/bookings${queryString ? `?${queryString}` : ""}`,
-    {
-      method: "GET",
-      cache: "no-store",
-    }
-  )
+  const api = `${BASE_URL}/bookings${queryString ? `?${queryString}` : ""}`
+  const res = await authFetch(api)
+
+  // const res = await fetch(
+  //   `${BASE_URL}/bookings${queryString ? `?${queryString}` : ""}`,
+  //   {
+  //     method: "GET",
+  //     cache: "no-store",
+  //   }
+  // )
+
   if (!res.ok) {
     throw new Error(`Failed to fetch rentals: ${res.status}`)
   }

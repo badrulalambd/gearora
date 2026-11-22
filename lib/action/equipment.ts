@@ -1,16 +1,24 @@
+"use server"
+
 import { IEquipmentType } from "@/type/type"
+import { protectedMutation } from "../core/server"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"
 
 //call api add-equipment page
 export const createEquipment = async (payload: IEquipmentType) => {
-  const res = await fetch(`${BASE_URL}/equipments`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  })
+
+  const api = `${BASE_URL}/equipments`
+  const res = await protectedMutation(api, "POST", payload);
+
+  // const res = await fetch(`${BASE_URL}/equipments`, {
+  //   method: "POST",
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  //   body: JSON.stringify(payload),
+  // })
+
   return res.json()
 }
 

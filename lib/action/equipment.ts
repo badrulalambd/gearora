@@ -27,23 +27,31 @@ export const updateEquipment = async (
   id: string | undefined,
   payload: Partial<IEquipmentType>
 ) => {
-  const res = await fetch(`${BASE_URL}/update-equipment/${id}`, {
-    method: "PATCH",
-    cache: "no-store",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  })
+  const api = `${BASE_URL}/update-equipment/${id}`
+  const res = await protectedMutation(api, "PATCH", payload)
+
+  // const res = await fetch(`${BASE_URL}/update-equipment/${id}`, {
+  //   method: "PATCH",
+  //   cache: "no-store",
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  //   body: JSON.stringify(payload),
+  // })
+
   return res.json()
 }
 
 //call api to delete an equipment
 export const deleteEquipment = async (id: string | undefined) => {
-  const res = await fetch(`${BASE_URL}/equipments/${id}`, {
-    method: "DELETE",
-    cache: "no-store",
-  })
+  const api = `${BASE_URL}/equipments/${id}`
+  const res = await protectedMutation(api, "DELETE")
+  
+  // const res = await fetch(`${BASE_URL}/equipments/${id}`, {
+  //   method: "DELETE",
+  //   cache: "no-store",
+  // })
+
   return res.json()
 }
 
@@ -52,14 +60,17 @@ export const updateEquipmentStatus = async (
   id: string | undefined,
   status: "Pending" | "Approved" | "Rejected"
 ) => {
-  const res = await fetch(`${BASE_URL}/equipments/${id}/status`, {
-    method: "PATCH",
-    cache: "no-store",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ status }),
-  })
+  const api = `${BASE_URL}/equipments/${id}/status`
+  const res = await protectedMutation(api, "PATCH", { status })
+
+  // const res = await fetch(`${BASE_URL}/equipments/${id}/status`, {
+  //   method: "PATCH",
+  //   cache: "no-store",
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  //   body: JSON.stringify({ status }),
+  // })
 
   const data = await res.json().catch(() => null)
 

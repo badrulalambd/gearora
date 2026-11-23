@@ -1,3 +1,4 @@
+"use server"
 import { protectedMutation } from "../core/server"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"
@@ -12,14 +13,17 @@ export const updateUserDetail = async (
     address?: string
   }
 ) => {
-  const res = await fetch(`${BASE_URL}/users/${id}`, {
-    method: "PATCH",
-    cache: "no-store",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  })
+  const api = `${BASE_URL}/users/${id}`
+  const res = await protectedMutation(api, "PATCH", payload)
+
+  // const res = await fetch(`${BASE_URL}/users/${id}`, {
+  //   method: "PATCH",
+  //   cache: "no-store",
+  //   headers: {
+  //     "content-type": "application/json",
+  //   },
+  //   body: JSON.stringify(payload),
+  // })
 
   const data = await res.json().catch(() => null)
 
@@ -36,7 +40,7 @@ export const updateUserRole = async (
   role: "customer" | "owner" | "admin"
 ) => {
   const api = `${BASE_URL}/users/${id}/role`
-  const res = await protectedMutation(api, "PATCH", role)
+  const res = await protectedMutation(api, "PATCH", {role})
 
   // const res = await fetch(`${BASE_URL}/users/${id}/role`, {
   //   method: "PATCH",
@@ -58,10 +62,13 @@ export const updateUserRole = async (
 
 //admin All Users page: delete a customer or owner after confirmation
 export const deleteUserAccount = async (id: string) => {
-  const res = await fetch(`${BASE_URL}/users/${id}`, {
-    method: "DELETE",
-    cache: "no-store",
-  })
+  const api = `${BASE_URL}/users/${id}`
+  const res = await protectedMutation(api, "DELETE")
+
+  // const res = await fetch(`${BASE_URL}/users/${id}`, {
+  //   method: "DELETE",
+  //   cache: "no-store",
+  // })
 
   const data = await res.json().catch(() => null)
 

@@ -29,10 +29,6 @@ const MyEquipmentCard = ({ equipment }: MyEquipmentCardProps) => {
     }
   }
 
-  const handleViewDetails = () => {
-    console.log("View equipment details:", equipment)
-  }
-
   return (
     <Card className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-md">
       <CardContent className="p-0">

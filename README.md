@@ -154,7 +154,10 @@ The platform streamlines the entire rental process, from equipment discovery and
 
 ---
 
+
 ## Installation & Setup
+
+> **Important:** Gearora's frontend fetches equipment data and other resources from its backend REST API. To run the application locally, you must also set up and run the [Gearora backend server](https://github.com/badrulalambd/gearora-server). Ensure the backend is running at `http://localhost:5000` or configure `NEXT_PUBLIC_API_BASE_URL` with the appropriate API URL.
 
 ### 1. Clone the Repository
 
@@ -192,7 +195,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key
 ```
 
-> **Note:** Replace the placeholder values with your actual credentials. Never commit your `.env.local` file or expose sensitive credentials in your public repository.
+> Replace the placeholder values with your actual credentials. Never commit your `.env.local` file or expose sensitive credentials in your public repository.
 
 ### 5. Start the Development Server
 
@@ -204,13 +207,37 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## Backend Repository
+### Backend Setup
 
-The backend is maintained in a separate repository.
+Gearora requires its backend server to provide REST API data for equipment listings, bookings, users, payments, analytics, and other application features.
 
-- **Server Repository:** [https://github.com/badrulalambd/gearora-server](https://github.com/badrulalambd/gearora-server)
+#### 1. Clone the Backend Repository
 
-The backend handles API requests, database operations, equipment management, rental bookings, payment-related operations, JWT verification, role-based authorization, and dashboard analytics.
+```bash
+git clone https://github.com/badrulalambd/gearora-server.git
+```
+
+#### 2. Navigate to the Backend Directory
+
+```bash
+cd gearora-server
+```
+
+#### 3. Install Backend Dependencies
+
+```bash
+npm install
+```
+
+#### 4. Configure Backend Environment Variables
+
+Configure the required backend environment variables according to the backend repository's documentation.
+
+#### 5. Start the Backend Server
+
+Run the backend development command defined in the backend repository's `package.json`.
+
+Ensure the backend server is running at `http://localhost:5000` before using the frontend application.
 
 ---
 

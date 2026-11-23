@@ -5,9 +5,9 @@ Gearora is a full-stack equipment rental marketplace that connects equipment own
 
 Customers can easily find and rent equipment, equipment owners can manage their rental businesses, and administrators can monitor and manage the entire platform through a dedicated dashboard.
 
-## Live Project
+## Live Links
 
-- **Live Website:** [https://gearora.vercel.app](https://gearora.vercel.app)
+- **Website Live Link:** [https://gearora.vercel.app](https://gearora.vercel.app)
 - **Client Repository:** [Gearora – Client](https://github.com/badrulalambd/gearora)
 - **Server Repository:** [Gearora – Server](https://github.com/badrulalambd/gearora-server)
 
@@ -154,10 +154,9 @@ The platform streamlines the entire rental process, from equipment discovery and
 
 ---
 
-
 ## Installation & Setup
 
-> **Important:** Gearora's frontend fetches equipment data and other resources from its backend REST API. To run the application locally, you must also set up and run the [Gearora backend server](https://github.com/badrulalambd/gearora-server). Ensure the backend is running at `http://localhost:5000` or configure `NEXT_PUBLIC_API_BASE_URL` with the appropriate API URL.
+> **Important:** Gearora's frontend relies on the backend REST API to retrieve equipment data and handle other application functionalities. Before running the frontend application, make sure to set up and run the backend server. Follow the setup instructions in the [Gearora Server Repository](https://github.com/badrulalambd/gearora-server).
 
 ### 1. Clone the Repository
 
@@ -197,47 +196,19 @@ NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key
 
 > Replace the placeholder values with your actual credentials. Never commit your `.env.local` file or expose sensitive credentials in your public repository.
 
-### 5. Start the Development Server
+### 5. Run the Backend Server
+
+Before starting the frontend, set up and run the backend server by following the instructions in the [Gearora Server Repository](https://github.com/badrulalambd/gearora-server).
+
+Ensure the backend server is running and accessible at `http://localhost:5000`.
+
+### 6. Start the Frontend Development Server
 
 ```bash
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-### Backend Setup
-
-Gearora requires its backend server to provide REST API data for equipment listings, bookings, users, payments, analytics, and other application features.
-
-#### 1. Clone the Backend Repository
-
-```bash
-git clone https://github.com/badrulalambd/gearora-server.git
-```
-
-#### 2. Navigate to the Backend Directory
-
-```bash
-cd gearora-server
-```
-
-#### 3. Install Backend Dependencies
-
-```bash
-npm install
-```
-
-#### 4. Configure Backend Environment Variables
-
-Configure the required backend environment variables according to the backend repository's documentation.
-
-#### 5. Start the Backend Server
-
-Run the backend development command defined in the backend repository's `package.json`.
-
-Ensure the backend server is running at `http://localhost:5000` before using the frontend application.
 
 ---
 
